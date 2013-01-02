@@ -37,3 +37,16 @@ Less important goals (accomplish at leisure):
 
 	256-limited opcodes are too limited. Escape to 16-bit?
 	finalizer thread -> user level (there's no need for it yet, fortunately...)
+
+New ideas:
+
+	create subclasses for Generic Player (Knight, Mage, Rogue, Cleric?)
+	
+	add script that runs upon first login that allows you to set your gender, description and class
+	
+	add HP variable to players?
+	
+	create Monster as subclass of Generic Thing
+	
+	Weapon subclass of Generic Thing. new verbs: wield <weapon>, attack <thing>
+	(a combat system could be tricky to get right if we decide to have one - otherwise PvP would just be a fast-typing battle)
