@@ -21,9 +21,13 @@ define method (Player) damage(amount) {
 }
 
 define method (Player) wield(weapon) {
-	this.wielded-weapon = weapon;
-	this:mtell(["You are now wielding ", this.wielded-weapon.name, ".\n"]);
-	location(this):announce([this.name, " wields ", this.wielded-weapon.name, ".\n"]);
+	if(find-by-name(contents(this),weapon.name)) {
+		this.wielded-weapon = weapon;
+		this:mtell(["You are now wielding ", this.wielded-weapon.name, ".\n"]);
+		location(this):announce([this.name, " wields ", this.wielded-weapon.name, ".\n"]);
+	} else {
+		this:tell("You have to be holding a weapon to wield it!\n");
+	}
 }
 
 define method (Player) attack(target) {
