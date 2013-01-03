@@ -21,7 +21,17 @@ define method (Player) damage(amount) {
 }
 
 define method (Player) wield(weapon) {
-	if(find-by-name(contents(this),weapon.name)) {
+	define is-in-inventory = false;
+	
+	define i = 0;
+	while (i < length(contents(this))) {
+		if(contents(this)[i] == weapon) {
+			is-in-inventory = true;
+		}
+		i = i + 1;
+	}
+	
+	if(is-in-inventory) {
 		this.wielded-weapon = weapon;
 		this:mtell(["You are now wielding ", this.wielded-weapon.name, ".\n"]);
 		location(this):announce([this.name, " wields ", this.wielded-weapon.name, ".\n"]);
