@@ -43,8 +43,15 @@ define method (TARGET) wield-verb(b) {
 TARGET:add-verb(#weapon, #wield-verb, ["wield ", #weapon]);
 
 define method (TARGET) damage(player, target) {
-	// TODO: actual damage
-	player:mtell(["You damage ", target.name, ".\n"]);
-	target:mtell(["\e[31m", player.name, " damages you!\e[0m"]);
-	location(player):announce([player.name, " damages ", target.name, ".\n"]);
+	player:mtell(["\e[32mYou attack ", target.name, " with ", this.name, " for ", this.damage, " damage.\e[0m\n"]);
+	target:mtell(["\e[31m", player.name, " attacks you with ", this.name, " for ", this.damage, " damage!\e[0m\n"]);
+	target:damage(this.damage);
+	if(target.hp > 0) {
+		player:mtell(["\e[31m", target.name, "'s HP: ", target.hp, "/100", "\e[0m\n"]);
+		target:mtell(["\e[32m", "YOUR HP: ", target.hp, "/100\e[0m\n"]);
+	} else {
+		player:mtell(["\e[31mYou have killed ", target.name, "!\e[0m\n"]);
+		target:damage(-200);
+	}
+	//location(player):announce([player.name, " attacks ", target.name, " with ", this.name," for ", this.damage," damage.\n"]);
 }
