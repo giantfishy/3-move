@@ -50,3 +50,5 @@ New ideas:
 	
 	Weapon subclass of Generic Thing. new verbs: wield <weapon>, attack <thing>
 	(a combat system could be tricky to get right if we decide to have one - otherwise PvP would just be a fast-typing battle)
+
+	Add a convenient way of deleting a verb or resetting the verbs list of an object
