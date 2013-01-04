@@ -43,6 +43,7 @@ define method (Player) wield(weapon) {
 define method (Player) unwield(weapon) {
 	if(weapon == this.wielded-weapon) {
 		this:mtell(["You unwield ", weapon.name, ".\n"]);
+		location(this):announce([this.name, " unwields ", weapon.name, ".\n"]);
 		this.wielded-weapon = false;
 	} else {
 		if(this.wielded-weapon) {
@@ -51,6 +52,32 @@ define method (Player) unwield(weapon) {
 			this:tell("You are not currently wielding a weapon.");
 		}
 	}
+}
+
+define method (Thing) name-for-invent(p) {
+  return this.name;
+}
+
+define method (Player) color-from-hp() {
+	if(this.hp > 65) {
+		return "\e[32m";
+	} else if(this.hp > 32) {
+		return "\e[33m";
+	} else {
+		return "\e[31m";
+	}
+}
+
+define method (Player) invent-verb(b) {
+  define s = ["HP: ", this:color-from-hp(), this.hp, "/100\e[0m\n\nYou are holding:\n"];
+
+  if (length(contents(this)) == 0)
+    s = s + ["    nothing.\n"];
+  else
+    
+    for-each(function (x) s = s + ["    " + x:name-for-invent(this) + "\n"], contents(this));
+
+  this:mtell(s);
 }
 
 define method (Player) attack(target) {
@@ -63,6 +90,10 @@ define method (Player) attack(target) {
 
 define method (Thing) be-attacked-verb(b) {
 	define p = realuid();
-	p:attack(this);
+	if(p == this) {
+		p:tell("You shouldn't attack yourself.");
+	} else {
+		p:attack(this);
+	}
 }
 Thing:add-verb(#target, #be-attacked-verb, ["attack ", #target]);

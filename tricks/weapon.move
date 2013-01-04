@@ -48,13 +48,21 @@ define method (TARGET) unwield-verb(b) {
 }
 TARGET:add-verb(#weapon, #unwield-verb, ["unwield ", #weapon]);
 
+//define method (TARGET) name-for-invent(p) {
+  //if(p.wielded-weapon == this) {
+  //  return this.name + " (equipped)";
+  //} else {
+  //  return this.name;
+  //}
+//}
+
 define method (TARGET) damage(player, target) {
 	player:mtell(["\e[32mYou attack ", target.name, " with ", this.name, " for ", this.damage, " damage.\e[0m\n"]);
 	target:mtell(["\e[31m", player.name, " attacks you with ", this.name, " for ", this.damage, " damage!\e[0m\n"]);
 	target:damage(this.damage);
 	if(target.hp > 0) {
-		player:mtell(["\e[31m", target.name, "'s HP: ", target.hp, "/100", "\e[0m\n"]);
-		target:mtell(["\e[32m", "YOUR HP: ", target.hp, "/100\e[0m\n"]);
+		player:mtell([target.name, "'s HP: ", target:color-from-hp(), target.hp, "/100", "\e[0m\n"]);
+		target:mtell(["Your HP: ", target:color-from-hp(), target.hp, "/100\e[0m\n"]);
 	} else {
 		player:mtell(["\e[31mYou have killed ", target.name, "!\e[0m\n"]);
 		target:damage(-200);
