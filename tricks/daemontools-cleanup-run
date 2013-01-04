@@ -1,0 +1,8 @@
+#!/bin/bash
+# To be run from within a daemontools instance.
+# Edit DBDIR appropriately.
+DBDIR=./db
+cd $DBDIR
+
+ulimit -c unlimited
+exec ../tricks/checkpoint-cleanup move.checkpoint. 300 6

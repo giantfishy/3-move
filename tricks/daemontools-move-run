@@ -1,0 +1,21 @@
+#!/bin/bash
+# To be run from within a daemontools instance.
+# Edit DBDIR appropriately.
+DBDIR=./db
+cd $DBDIR
+
+NOW=$(date '+%Y%m%d%H%M%S')
+PRELAUNCH=prelaunch/$NOW
+NEWEST=$(ls move.checkpoint.* | sort -nr | head -1)
+
+mkdir -p $PRELAUNCH
+cp core db db.old move.checkpoint.* $PRELAUNCH
+
+if [ -n "$NEWEST" ]; then
+    mv db db.old
+    mv $NEWEST db
+    rm -f move.checkpoint.*
+fi
+
+ulimit -c unlimited
+exec ./move db restart.move
