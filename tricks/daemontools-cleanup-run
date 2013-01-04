@@ -1,8 +1,15 @@
 #!/bin/bash
 # To be run from within a daemontools instance.
-# Edit DBDIR appropriately.
+# Edit DBDIR and MOVEUSER appropriately.
 DBDIR=./db
+MOVEUSER=
+
 cd $DBDIR
 
 ulimit -c unlimited
-exec ../tricks/checkpoint-cleanup move.checkpoint. 300 6
+CMD="exec ../tricks/checkpoint-cleanup move.checkpoint. 300 6"
+if [ -n "$MOVEUSER" ]; then
+    exec su $MOVEUSER -c "$CMD"
+else
+    $CMD
+fi

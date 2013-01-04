@@ -1,7 +1,9 @@
 #!/bin/bash
 # To be run from within a daemontools instance.
-# Edit DBDIR appropriately.
+# Edit DBDIR and MOVEUSER appropriately.
 DBDIR=./db
+MOVEUSER=
+
 cd $DBDIR
 
 NOW=$(date '+%Y%m%d%H%M%S')
@@ -18,4 +20,9 @@ if [ -n "$NEWEST" ]; then
 fi
 
 ulimit -c unlimited
-exec ./move db restart.move
+CMD="exec ./move db restart.move"
+if [ -n "$MOVEUSER" ]; then
+    exec su $MOVEUSER -c "$CMD"
+else
+    $CMD
+fi
