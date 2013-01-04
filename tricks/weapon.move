@@ -42,6 +42,12 @@ define method (TARGET) wield-verb(b) {
 }
 TARGET:add-verb(#weapon, #wield-verb, ["wield ", #weapon]);
 
+define method (TARGET) unwield-verb(b) {
+  define p = realuid();
+  p:unwield(this);
+}
+TARGET:add-verb(#weapon, #unwield-verb, ["unwield ", #weapon]);
+
 define method (TARGET) damage(player, target) {
 	player:mtell(["\e[32mYou attack ", target.name, " with ", this.name, " for ", this.damage, " damage.\e[0m\n"]);
 	target:mtell(["\e[31m", player.name, " attacks you with ", this.name, " for ", this.damage, " damage!\e[0m\n"]);

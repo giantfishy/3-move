@@ -40,6 +40,19 @@ define method (Player) wield(weapon) {
 	}
 }
 
+define method (Player) unwield(weapon) {
+	if(weapon == this.wielded-weapon) {
+		this:mtell(["You unwield ", weapon.name, ".\n"]);
+		this.wielded-weapon = false;
+	} else {
+		if(this.wielded-weapon) {
+			this:mtell([weapon.name, " is not your current wielded weapon, ", this.wielded-weapon, " is.\n"]);
+		} else {
+			this:tell("You are not currently wielding a weapon.");
+		}
+	}
+}
+
 define method (Player) attack(target) {
 	if (this.wielded-weapon) {
 		this.wielded-weapon:damage(this, target);
