@@ -6,7 +6,6 @@ MOVEUSER=
 
 cd $DBDIR
 
-ulimit -c unlimited
 CMD="exec ../tricks/checkpoint-cleanup move.checkpoint. 300 6"
 if [ -n "$MOVEUSER" ]; then
     exec su $MOVEUSER -c "$CMD"

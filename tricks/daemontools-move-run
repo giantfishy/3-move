@@ -19,10 +19,10 @@ if [ -n "$NEWEST" ]; then
     rm -f move.checkpoint.*
 fi
 
-ulimit -c unlimited
 CMD="exec ./move db restart.move"
 if [ -n "$MOVEUSER" ]; then
-    exec su $MOVEUSER -c "$CMD"
+    exec su $MOVEUSER -c "ulimit -c unlimited; $CMD"
 else
+    ulimit -c unlimited
     $CMD
 fi
