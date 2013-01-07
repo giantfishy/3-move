@@ -102,7 +102,7 @@ define method (Exit) transport(item) {
 
   if (this:locked-for?(item)) {
     item:mtell(exit-sub(this.exit-fail-msg));
-    oldloc:announce-except(item, exit-sub(this.other-exit-fail-msg));
+    oldloc:announce-except([item], exit-sub(this.other-exit-fail-msg));
     return;
   }
 
@@ -113,11 +113,11 @@ define method (Exit) transport(item) {
 
   if (do-the-move()) {
     item:mtell(exit-sub(this.ok-msg));
-    oldloc:announce-except(item, exit-sub(this.other-ok-msg));
-    location(item):announce-except(item, exit-sub(this.other-entry-msg));
+    oldloc:announce-except([item], exit-sub(this.other-ok-msg));
+    location(item):announce-except([item], exit-sub(this.other-entry-msg));
   } else {
     item:mtell(exit-sub(this.entry-fail-msg));
-    oldloc:announce-except(item, exit-sub(this.other-entry-fail-msg));
+    oldloc:announce-except([item], exit-sub(this.other-entry-fail-msg));
   }
 }
 

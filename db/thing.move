@@ -219,14 +219,14 @@ define method (Thing) mtell(vec) {
 define method (Thing) tell(x) undefined;
 make-method-overridable(Thing:tell, true);
 
-define method (Thing) announce(x) this:announce-except(realuid(), x);
+define method (Thing) announce(x) this:announce-except([realuid()], x);
 
 define method (Thing) announce-all(x)
   for-each(function (o) o:mtell(x), contents(this));
 make-method-overridable(Thing:announce-all, true);
 
-define method (Thing) announce-except(who, x)
-  for-each(function (o) if (o != who) o:mtell(x), contents(this));
+define method (Thing) announce-except(who-vec, x)
+  for-each(function (o) if (!index-of(who-vec, o)) o:mtell(x), contents(this));
 make-method-overridable(Thing:announce-except, true);
 
 define method (Thing) listening?() false;
