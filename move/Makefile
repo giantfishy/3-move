@@ -16,7 +16,8 @@ DELETE = rm -f
 
 ######################### UNCOMMENT FOR LINUX ON x86
 CC = gcc
-CFLAGS = -c -Wall -g -O2
+# CFLAGS = -c -Wall -g -O2
+CFLAGS = -c -Wall -g
 LIBS =
 
 ######################### UNCOMMENT FOR OSF/1 ON ALPHA
